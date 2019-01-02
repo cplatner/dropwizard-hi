@@ -1,0 +1,53 @@
+//* Build a Dropwizard project that can run on Java 9/10/11
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.3'
+    }
+}
+
+plugins {
+    id 'com.github.johnrengelman.shadow' version '4.0.3'
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    jcenter()
+}
+
+ext {
+    dropwizardVersion = '1.3.+'
+}
+
+dependencies {
+    //* Required to work on JDK 9 and later
+    implementation 'javax.xml.bind:jaxb-api:2.2.11'
+    implementation 'com.sun.xml.bind:jaxb-core:2.2.11'
+    implementation 'com.sun.xml.bind:jaxb-impl:2.2.11'
+    implementation 'javax.activation:activation:1.1.1'
+
+    implementation 'io.dropwizard:dropwizard-core:' + dropwizardVersion
+    implementation 'io.dropwizard:dropwizard-auth:' + dropwizardVersion
+    implementation 'io.dropwizard:dropwizard-assets:' + dropwizardVersion
+    implementation 'io.dropwizard:dropwizard-http2:' + dropwizardVersion
+    implementation 'io.dropwizard:dropwizard-hibernate:' + dropwizardVersion
+    implementation 'io.dropwizard:dropwizard-migrations:' + dropwizardVersion
+    implementation 'io.dropwizard:dropwizard-views-freemarker:' + dropwizardVersion
+    implementation 'io.dropwizard:dropwizard-views-mustache:' + dropwizardVersion
+    implementation 'io.dropwizard:dropwizard-metrics-graphite:' + dropwizardVersion
+    implementation 'com.h2database:h2:1.4.+'
+
+    testImplementation 'io.dropwizard:dropwizard-testing:' + dropwizardVersion
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.23.+'
+}
+
+run {
+  args 'server', 'hello-rest.yml'
+}
+
+// Define the main class for the application
+mainClassName = 'com.platner.hellorest.HelloRestApp'
